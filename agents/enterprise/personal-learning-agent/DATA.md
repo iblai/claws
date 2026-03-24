@@ -1,0 +1,39 @@
+# Data Sources
+
+Systems and platforms commonly accessed for employee learning and development.
+
+## Learning Management Systems (LMS)
+
+- **Cornerstone OnDemand** -- course catalog (course ID, title, description, format, duration, provider, prerequisites), learning assignments (user ID, course ID, assigned date, due date, status, assigned by), completion records (user ID, course ID, completion date, score, attempts, certificate URL), compliance training (regulation code, requirement type, renewal period, expiration date), skill assessments (skill name, proficiency level, assessment date, assessor)
+- **SAP SuccessFactors Learning** -- training curriculum (curriculum ID, courses, sequence, version), certification programs (cert ID, requirements, validity period, renewal rules), instructor-led sessions (session ID, instructor, location, capacity, enrollment count, waitlist), regulatory compliance records (regulation, jurisdiction, completion status, expiration, audit trail), learning history (user ID, activity type, timestamp, duration, score)
+- **Workday Learning** -- learning assignments (worker ID, content ID, assignment reason, due date, completion status), content recommendations (recommended content, relevance score, skill alignment, recommendation source), skill development tracking (skill name, target proficiency, current proficiency, linked learning, progress percentage), learning campaigns (campaign ID, target population, content, start/end dates, completion rates)
+- **Docebo** -- AI content recommendations (user ID, content ID, relevance score, engagement prediction), content curation (channel ID, content items, curator, audience, freshness score), social learning activity (posts, comments, shares, reactions, user ID, timestamp), gamification data (badges, points, leaderboard rank, streaks, challenges completed), learning analytics (completion rates, engagement scores, time-on-task, content ratings, drop-off points)
+- **Absorb LMS** -- course delivery records (enrollment ID, course ID, user ID, progress, last accessed), compliance tracking (requirement ID, user ID, due date, completion date, grace period, escalation status), e-commerce transactions (order ID, course ID, price, discount, payment method, user ID), reporting data (department completions, overdue assignments, average scores, trending courses)
+- **Totara Learn** -- competency frameworks (competency ID, name, scale, evidence requirements, parent competency), certification programs (cert ID, courses required, active period, recertification window, completion pathway), learning plans (plan ID, user ID, competencies, courses, target dates, approval status, progress)
+- **LinkedIn Learning (enterprise)** -- professional development courses (course ID, title, skills covered, level, duration, instructor, last updated), skill paths (path ID, skills, courses, estimated duration, completion percentage), learning activity data (user ID, course ID, videos watched, time spent, completion date, content saves, shares)
+
+## Learning Experience Platforms (LXP)
+
+- **Degreed** -- skill assessments (skill name, self-rating, manager rating, peer rating, evidence links, assessment date), content aggregation (content URL, source, type, skill tags, rating, saves, completions), learning pathways (pathway ID, skills, content sequence, creator, followers, completion stats), career mobility data (current role, target role, skill gaps, recommended learning, mobility score)
+- **EdCast (now Cornerstone)** -- content discovery (content ID, source, format, topics, relevance score, user interactions), knowledge sharing (post ID, author, content type, reactions, comments, shares), skill mapping (skill taxonomy, skill clusters, proficiency levels, inferred skills from activity)
+- **Percipio (Skillsoft)** -- curated content channels (channel ID, topic, content count, skill coverage, curation date), skill benchmarks (skill name, user score, peer average, industry benchmark, percentile), practice labs (lab ID, technology, duration, objectives, completion status, hands-on time), digital badges (badge ID, skill, criteria, issue date, issuer, verification URL)
+
+## Content & Certification
+
+- **Coursera for Business** -- university-partnered courses (course ID, university, title, skills, level, duration, rating, enrollment count), professional certificates (cert ID, issuing institution, skills, courses required, completion status, credential URL), specializations (specialization ID, courses, capstone project, skills, estimated duration, progress)
+- **Udemy Business** -- on-demand courses (course ID, title, instructor, rating, enrollment count, last updated, skill tags), custom learning paths (path ID, courses, creator, target audience, estimated hours), instructor-led content (session ID, instructor, schedule, capacity, topic, prerequisites)
+- **Pluralsight** -- technology skill assessments (Skill IQ ID, technology, score, percentile, assessment date, question count), learning paths (path ID, title, courses, estimated hours, skill level, technology stack), hands-on labs (lab ID, technology, environment, duration, objectives, completion status), Skill IQ scores (technology, score, level classification, peer comparison, trend over time)
+- **A Cloud Guru (now Pluralsight)** -- cloud certification prep (cert name, provider, exam objectives, study progress, practice exam scores), sandbox environments (sandbox ID, cloud provider, services enabled, time remaining, usage history)
+- **Credly / Acclaim** -- digital badges (badge ID, name, issuer, criteria, skills, issue date, expiration date, verification URL), certification verification (cert holder, cert name, issuer, issue date, validity, verification status), skill credentials (credential type, skill name, evidence, endorsements, earner count)
+
+## Skills & Competency
+
+- **Workday Skills Cloud** -- skill ontology (skill ID, name, category, related skills, demand level, growth trend), gap analysis (worker ID, current skills, required skills, gap severity, recommended actions), skill-based talent matching (open role, required skills, matching workers, match score, readiness level)
+- **Degreed Skill Ratings** -- self-assessed skill levels (user ID, skill, rating, confidence, date), manager-validated skill levels (user ID, skill, manager rating, validation date, comments), evidence-based assessments (skill, evidence type, source URL, date, reviewer)
+- **Lightcast (formerly EMSI/Burning Glass)** -- market skill demand data (skill name, demand index, growth rate, salary premium, geographic distribution), occupation taxonomies (SOC code, occupation title, required skills, education, median salary), skill adjacencies (source skill, adjacent skills, transition probability, upskilling time estimate)
+
+## Analytics & Reporting
+
+- **Visier** -- learning analytics (completion rates by department/role/tenure, time-to-competency, learning hours per employee), skill development trends (skill adoption rate, proficiency progression, skill half-life, emerging skills), ROI analysis (training cost per employee, productivity impact, retention correlation, skill acquisition cost)
+- **Tableau / Power BI** -- training completion dashboards (completion rate, overdue count, by department/manager/location), compliance status (compliant percentage, at-risk employees, expiring certifications, audit readiness), learning engagement metrics (active learners, content utilization, average time-on-platform, login frequency, content ratings)
+- **xAPI / Learning Record Store (LRS)** -- granular learning activity data (actor, verb, object, result, context, timestamp, authority), cross-platform learning records (source system, activity type, duration, score, completion, device), competency assertions (agent, competency, level, evidence, assertion date)

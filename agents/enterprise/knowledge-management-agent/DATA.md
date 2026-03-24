@@ -1,0 +1,43 @@
+# Data Sources
+
+Systems and platforms commonly accessed for institutional knowledge management.
+
+## Enterprise Wikis & Documentation
+
+- **Confluence (Atlassian)** -- team spaces (space key, name, type, permissions, homepage, description), knowledge articles (page ID, title, body content, labels, version, author, last modified, parent page, restrictions), templates (template ID, name, description, body, labels, space scope), page trees (page hierarchy, child pages, depth, navigation structure), version history (version number, author, modification date, change comment, diff, restore capability)
+- **Notion** -- team wikis (workspace ID, page hierarchy, database schema, permissions, sharing settings), databases (database ID, properties, views, filters, sorts, relations, rollups, formulas), project documentation (page ID, content blocks, embedded databases, synced blocks, sub-pages, comments), knowledge repositories (top-level pages, categorization, tags, last edited, created by, linked databases)
+- **SharePoint (Microsoft)** -- document libraries (library ID, columns, content types, views, versioning settings, check-in/out policy), site collections (site URL, site template, subsites, permissions, storage quota, features), managed metadata (term store, term groups, term sets, terms, labels, synonyms, custom properties), content types (content type ID, fields, document template, workflows, information management policies)
+- **Guru** -- verified knowledge cards (card ID, title, content, verification status, verifier, verification date, next verification due, trust score), AI-suggested answers (query, matched cards, confidence score, feedback), Slack/Teams integration (trigger phrases, auto-suggested cards, click-through rate, dismissal rate), expert verification (expert ID, assigned cards, verification frequency, overdue verifications, knowledge domains)
+- **Tettra** -- internal knowledge base (page ID, title, category, subcategory, content, author, last updated, views), Q&A workflows (question ID, asker, answer, answerer, upvotes, linked page, resolution status), Slack integration (trigger channels, auto-responses, escalation rules, unanswered question queue), stale content detection (page ID, last updated, last viewed, staleness score, review assignment, suggested action)
+
+## Document & Content Management
+
+- **Google Drive / Google Docs** -- collaborative documents (doc ID, title, owner, editors, viewers, last modified, sharing permissions, folder path), shared drives (drive ID, name, members, storage used, file count, organizational unit), version history (revision ID, editor, timestamp, changes summary, restore capability)
+- **Dropbox Business** -- file storage (file ID, name, path, size, modified date, shared links, sync status), paper documents (doc ID, title, content, comments, tasks, sharing, folder), team folders (folder ID, name, members, policies, sync settings), audit logs (event type, user, timestamp, file path, action details, IP address)
+- **Box** -- cloud content management (file ID, name, path, size, version, owner, collaborators, watermarking), workflow automation (workflow ID, trigger, steps, approvers, SLA, status, completion date), metadata (template ID, fields, field values, cascade policies, classification), governance policies (retention policy, legal hold, disposition, classification labels, security classification)
+- **M-Files** -- metadata-driven document management (object ID, object type, class, properties, version, workflow state, permissions), workflow automation (workflow ID, states, transitions, conditions, assigned users, SLA), compliance (retention policies, audit trail, electronic signatures, regulatory classification, disposition schedule)
+
+## Search & Discovery
+
+- **Elastic Enterprise Search** -- full-text search (index, query, results, relevance score, facets, filters, suggestions), relevance tuning (boost rules, synonym sets, curations, precision/recall metrics), analytics (query volume, top queries, zero-result queries, click-through rate, average position), content connectors (source type, sync schedule, indexed document count, last sync status, field mappings)
+- **Coveo** -- AI-powered search (query, results, ML relevance ranking, query suggestions, automatic relevance tuning), content recommendations (recommended items, recommendation model, click-through rate, context), usage analytics (query count, click-through rate, search success rate, content gap analysis, user journey), relevance tuning (query pipelines, ranking expressions, featured results, thesaurus, stop words)
+- **Glean** -- enterprise search across SaaS apps (connected apps, query, results, source app, relevance score, permissions-aware filtering), AI-powered answers (query, generated answer, source documents, confidence score, citation), people search (name, title, department, expertise, contact info, org chart position, recent activity)
+- **Lucidworks** -- search and discovery (query, results, facets, filters, spell correction, typeahead, NLP enrichment), signals-based relevance (user signals, click events, conversion events, relevance model, A/B test results), commerce search (product search, catalog, category navigation, personalized results, merchandising rules)
+
+## Collaboration & Communication (as knowledge sources)
+
+- **Slack** -- channel history (channel ID, messages, threads, reactions, files shared, pins, bookmarks), threads (parent message, replies, participants, reactions, resolution status), bookmarked messages (bookmark ID, message reference, channel, timestamp, bookmarker), canvas documents (canvas ID, content blocks, collaborators, sharing, embedded content), workflow builder (workflow ID, triggers, steps, forms, data collected)
+- **Microsoft Teams** -- chat history (chat ID, participants, messages, reactions, files shared, read receipts), channel messages (channel ID, team ID, messages, replies, mentions, attachments, tabs), meeting recordings (recording URL, meeting ID, transcript, attendees, duration, chat log), wiki tabs (wiki ID, sections, pages, content, contributors, last modified)
+- **Loom** -- video messages (video ID, title, creator, duration, transcript, views, reactions, comments), screen recordings (recording type, resolution, annotations, chapters, thumbnail), async communication (video thread, responses, timestamps, viewer engagement, CTA clicks), transcript search (searchable text, speaker identification, timestamps, keyword highlights)
+- **Yammer / Viva Engage** -- community discussions (community ID, topic, posts, replies, reactions, participants, trending), Q&A threads (question ID, question text, answers, best answer, upvotes, expert responses), knowledge sharing (post type, attachments, links, reactions, shares, reach, engagement rate)
+
+## Process & Workflow Documentation
+
+- **Lucidchart / Miro** -- process diagrams (diagram ID, type, shapes, connections, layers, comments, version), flowcharts (start/end nodes, decision points, process steps, connectors, annotations, swim lanes), organizational charts (org units, positions, incumbents, reporting lines, hierarchy depth), visual collaboration (board ID, frames, sticky notes, comments, voting dots, timer, participants)
+- **Swimlane / ProcessMaker** -- business process mapping (process ID, BPMN elements, lanes, gateways, events, data objects), workflow automation (workflow ID, triggers, tasks, routing rules, SLA, escalation, completion metrics)
+- **Scribe / Tango** -- automated process documentation (guide ID, title, steps, screenshots, annotations, click paths, text instructions), step-by-step guides (step number, action description, screenshot, highlight area, tips, URL, application), screen capture workflows (capture session, application, actions recorded, auto-generated documentation, editing, sharing)
+
+## Analytics & Reporting
+
+- **Tableau / Power BI** -- knowledge base usage dashboards (page views, unique visitors, top articles, trending topics, content freshness), search analytics (query volume, top queries, failed searches, click-through rate, search refinements), content gap analysis (unanswered queries, low-rated articles, missing topics, user feedback themes)
+- **Google Analytics** -- wiki page views (page URL, views, unique views, avg time on page, bounce rate, exit rate), search queries (internal search terms, search exits, search refinements, results pages per search), user journeys (landing pages, navigation paths, session duration, pages per session, goal completions), content engagement (page depth, scroll depth, outbound link clicks, file downloads, event tracking)
