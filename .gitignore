@@ -1,0 +1,3 @@
+# Real credential files — never commit. Only .env.example templates are tracked.
+.env
+*/.env

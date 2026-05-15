@@ -1,0 +1,176 @@
+{
+  "agents": {
+    "defaults": {
+      "workspace": "/sandbox/.openclaw/workspace",
+      "model": { "primary": "anthropic/claude-sonnet-4-5-20250929" },
+      "skills": [
+        "powerschool",
+        "canvas",
+        "google-classroom",
+        "frontline",
+        "parentsquare",
+        "nwea-map",
+        "edulastic",
+        "khan-academy",
+        "ebsco",
+        "classdojo",
+        "google-workspace-edu",
+        "iready"
+      ],
+      "subagents": {
+        "maxConcurrent": 8,
+        "maxChildrenPerAgent": 20,
+        "runTimeoutSeconds": 900,
+        "archiveAfterMinutes": 60
+      },
+      "sandbox": {
+        "mode": "all",
+        "backend": "openshell",
+        "scope": "agent",
+        "workspaceAccess": "rw"
+      }
+    },
+    "list": [
+      {
+        "id": "k-12-assistant",
+        "default": true,
+        "name": "School Assistant",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/k-12-assistant/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "School Assistant", "emoji": "🏫" },
+        "tools": { "profile": "full" },
+        "subagents": {
+          "allowAgents": [
+            "tutoring-agent",
+            "lesson-planning-agent",
+            "assessment-agent",
+            "writing-feedback-agent",
+            "special-education-agent",
+            "content-creation-agent",
+            "student-safety-agent",
+            "family-communication-agent",
+            "curriculum-alignment-agent",
+            "professional-development-agent",
+            "research-agent",
+            "administration-agent"
+          ],
+          "delegationMode": "prefer",
+          "maxSpawnDepth": 2
+        }
+      },
+      {
+        "id": "tutoring-agent",
+        "name": "Tutor",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/tutoring-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Tutor", "emoji": "📚" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "lesson-planning-agent",
+        "name": "Lesson Planner",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/lesson-planning-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Lesson Planner", "emoji": "📝" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "assessment-agent",
+        "name": "Assessment Builder",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/assessment-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Assessment Builder", "emoji": "📊" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "writing-feedback-agent",
+        "name": "Writing Coach",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/writing-feedback-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Writing Coach", "emoji": "✍️" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "special-education-agent",
+        "name": "Special Education Support",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/special-education-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Special Education Support", "emoji": "🤝" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "content-creation-agent",
+        "name": "Content Creator",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/content-creation-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Content Creator", "emoji": "🎨" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "student-safety-agent",
+        "name": "Safety Monitor",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/student-safety-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Safety Monitor", "emoji": "🛡️" },
+        "tools": { "profile": "full" },
+        "heartbeat": { "every": "1h" },
+        "session": { "isolation": "strict" }
+      },
+      {
+        "id": "family-communication-agent",
+        "name": "Family Communicator",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/family-communication-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Family Communicator", "emoji": "💌" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "curriculum-alignment-agent",
+        "name": "Curriculum Aligner",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/curriculum-alignment-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Curriculum Aligner", "emoji": "🗺️" },
+        "tools": { "profile": "full" },
+        "heartbeat": { "every": "24h" }
+      },
+      {
+        "id": "professional-development-agent",
+        "name": "PD Coach",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/professional-development-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "PD Coach", "emoji": "🎓" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "research-agent",
+        "name": "Research Guide",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/research-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Research Guide", "emoji": "🔍" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "administration-agent",
+        "name": "School Administrator",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/administration-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "School Administrator", "emoji": "🏢" },
+        "tools": { "profile": "full" },
+        "heartbeat": { "every": "24h" }
+      }
+    ]
+  }
+}

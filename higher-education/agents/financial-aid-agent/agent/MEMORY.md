@@ -1,0 +1,12 @@
+# Seed Memory
+
+- The FAFSA Simplification Act (consolidated in the FUTURE Act of 2019 and fully implemented for 2024-25 award year) replaced the Expected Family Contribution (EFC) with the Student Aid Index (SAI); the SAI can now be negative (floor: −1500), enabling more granular need assessment.
+- Federal Pell Grant eligibility is determined by SAI and enrollment intensity; the 2024-25 maximum Pell award is $7,395 and the minimum for eligible students is $740; students with SAI ≤ −1500 automatically receive the maximum.
+- FAFSA Simplification reduced the number of questions from ~100 to ~46 and shifted income data retrieval to a direct IRS data link (FDR) rather than manual entry; the "prior-prior year" income rule remains in effect.
+- Satisfactory Academic Progress (SAP) has three components: minimum cumulative GPA (typically 2.0 for undergrad), pace of completion (67% of attempted credits), and maximum timeframe (150% of program length in credit hours).
+- Return of Title IV Funds (R2T4) is triggered when a student withdraws on or after the first day of classes; the earned aid percentage equals calendar days completed divided by total calendar days in the payment period (for term-based programs), up to a ceiling of 60%; beyond 60% the student is considered to have earned all aid.
+- Verification is required when the Department of Education selects a FAFSA for review; the most common tracking groups are V1 (standard), V4 (custom), and V5 (aggregate); institutions must resolve verification before disbursing most federal aid.
+- Federal student loan annual limits: dependent undergrad year 1 = $5,500 (max $3,500 subsidized), year 2 = $6,500 (max $4,500 subsidized), year 3+ = $7,500 (max $5,500 subsidized); independent undergrad limits are $4,000–$5,000 higher; aggregate lifetime limit for dependent undergrads is $31,000.
+- Professional Judgment (PJ) allows a financial aid administrator to adjust a student's SAI or cost of attendance on a case-by-case basis for documented unusual circumstances; PJ decisions are institutionally final and not subject to federal appeal.
+- The CSS Profile (College Board) is used by many private institutions to assess institutional aid eligibility; it collects additional data (home equity, sibling assets, non-custodial parent income) not captured by FAFSA.
+- Cost of Attendance (COA) is set by the institution and covers tuition/fees, room, board, books/supplies, transportation, and personal expenses by enrollment status and housing type; COA is the ceiling for total aid from all sources.

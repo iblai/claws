@@ -1,0 +1,171 @@
+{
+  "agents": {
+    "defaults": {
+      "workspace": "/sandbox/.openclaw/workspace",
+      "model": { "primary": "anthropic/claude-sonnet-4-5-20250929" },
+      "subagents": { "maxConcurrent": 8, "maxChildrenPerAgent": 20, "runTimeoutSeconds": 900, "archiveAfterMinutes": 60 },
+      "sandbox": { "mode": "all", "backend": "openshell", "scope": "agent", "workspaceAccess": "rw" },
+      "skills": [
+        "salesforce-financial-services-cloud",
+        "bloomberg-terminal",
+        "nice-actimize",
+        "docusign",
+        "workiva",
+        "blackrock-aladdin",
+        "factset",
+        "lexisnexis-worldcompliance",
+        "servicenow",
+        "morningstar-direct",
+        "splunk"
+      ]
+    },
+    "list": [
+      {
+        "id": "financial-services-assistant",
+        "default": true,
+        "name": "Advisory Assistant",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/financial-services-assistant/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Advisory Assistant", "emoji": "🏦" },
+        "tools": { "profile": "full" },
+        "subagents": {
+          "allowAgents": [
+            "compliance-agent",
+            "risk-assessment-agent",
+            "client-advisory-agent",
+            "regulatory-reporting-agent",
+            "portfolio-analysis-agent",
+            "employee-training-agent",
+            "kyc-aml-agent",
+            "fraud-detection-agent",
+            "client-onboarding-agent",
+            "knowledge-agent",
+            "it-help-desk-agent",
+            "operations-agent"
+          ],
+          "delegationMode": "prefer",
+          "maxSpawnDepth": 2
+        }
+      },
+      {
+        "id": "compliance-agent",
+        "name": "Compliance Monitor",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/compliance-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Compliance Monitor", "emoji": "⚖️" },
+        "tools": { "profile": "full" },
+        "heartbeat": { "every": "6h" },
+        "session": { "isolated": true }
+      },
+      {
+        "id": "risk-assessment-agent",
+        "name": "Risk Analyst",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/risk-assessment-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Risk Analyst", "emoji": "📊" },
+        "tools": { "profile": "full" },
+        "heartbeat": { "every": "1h" },
+        "session": { "isolated": true }
+      },
+      {
+        "id": "client-advisory-agent",
+        "name": "Client Advisor",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/client-advisory-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Client Advisor", "emoji": "💼" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "regulatory-reporting-agent",
+        "name": "Regulatory Reporter",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/regulatory-reporting-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Regulatory Reporter", "emoji": "📋" },
+        "tools": { "profile": "full" },
+        "heartbeat": { "every": "6h" },
+        "session": { "isolated": true }
+      },
+      {
+        "id": "portfolio-analysis-agent",
+        "name": "Portfolio Analyst",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/portfolio-analysis-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Portfolio Analyst", "emoji": "📈" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "employee-training-agent",
+        "name": "Training Coordinator",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/employee-training-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Training Coordinator", "emoji": "🎓" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "kyc-aml-agent",
+        "name": "KYC/AML Specialist",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/kyc-aml-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "KYC/AML Specialist", "emoji": "🔍" },
+        "tools": { "profile": "full" },
+        "heartbeat": { "every": "4h" },
+        "session": { "isolated": true }
+      },
+      {
+        "id": "fraud-detection-agent",
+        "name": "Fraud Investigator",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/fraud-detection-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Fraud Investigator", "emoji": "🚨" },
+        "tools": { "profile": "full" },
+        "heartbeat": { "every": "4h" },
+        "session": { "isolated": true }
+      },
+      {
+        "id": "client-onboarding-agent",
+        "name": "Onboarding Specialist",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/client-onboarding-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Onboarding Specialist", "emoji": "🤝" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "knowledge-agent",
+        "name": "Knowledge Librarian",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/knowledge-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Knowledge Librarian", "emoji": "📚" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "it-help-desk-agent",
+        "name": "IT Help Desk",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/it-help-desk-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "IT Help Desk", "emoji": "🖥️" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "operations-agent",
+        "name": "Operations Specialist",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/operations-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Operations Specialist", "emoji": "⚙️" },
+        "tools": { "profile": "full" }
+      }
+    ]
+  }
+}

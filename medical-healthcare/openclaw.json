@@ -1,0 +1,164 @@
+{
+  "agents": {
+    "defaults": {
+      "workspace": "/sandbox/.openclaw/workspace",
+      "model": { "primary": "anthropic/claude-sonnet-4-5-20250929" },
+      "subagents": { "maxConcurrent": 8, "maxChildrenPerAgent": 20, "runTimeoutSeconds": 900, "archiveAfterMinutes": 60 },
+      "sandbox": { "mode": "all", "backend": "openshell", "scope": "agent", "workspaceAccess": "rw" },
+      "skills": [
+        "epic-fhir",
+        "cerner-fhir",
+        "nuance-dax",
+        "uptodate",
+        "micromedex",
+        "availity",
+        "servicenow",
+        "healthstream",
+        "pubmed",
+        "innovaccer"
+      ]
+    },
+    "list": [
+      {
+        "id": "medical-healthcare-assistant",
+        "default": true,
+        "name": "Care Assistant",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/medical-healthcare-assistant/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Care Assistant", "emoji": "🏥" },
+        "tools": { "profile": "full" },
+        "subagents": {
+          "allowAgents": [
+            "clinical-support-agent",
+            "patient-education-agent",
+            "medical-coding-agent",
+            "compliance-training-agent",
+            "research-agent",
+            "provider-onboarding-agent",
+            "prior-authorization-agent",
+            "care-coordination-agent",
+            "documentation-agent",
+            "quality-improvement-agent",
+            "it-help-desk-agent",
+            "knowledge-management-agent"
+          ],
+          "delegationMode": "prefer",
+          "maxSpawnDepth": 2
+        }
+      },
+      {
+        "id": "clinical-support-agent",
+        "name": "Clinical Support",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/clinical-support-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Clinical Support", "emoji": "🩺" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "patient-education-agent",
+        "name": "Patient Education",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/patient-education-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Patient Education", "emoji": "📋" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "medical-coding-agent",
+        "name": "Medical Coding",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/medical-coding-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Medical Coding", "emoji": "🔢" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "compliance-training-agent",
+        "name": "Compliance Training",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/compliance-training-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Compliance Training", "emoji": "🛡️" },
+        "tools": { "profile": "full" },
+        "heartbeat": { "every": "24h" }
+      },
+      {
+        "id": "research-agent",
+        "name": "Research",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/research-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Research", "emoji": "🔬" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "provider-onboarding-agent",
+        "name": "Provider Onboarding",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/provider-onboarding-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Provider Onboarding", "emoji": "🩻" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "prior-authorization-agent",
+        "name": "Prior Authorization",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/prior-authorization-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Prior Authorization", "emoji": "📝" },
+        "tools": { "profile": "full" },
+        "heartbeat": { "every": "4h" }
+      },
+      {
+        "id": "care-coordination-agent",
+        "name": "Care Coordination",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/care-coordination-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Care Coordination", "emoji": "🤝" },
+        "tools": { "profile": "full" },
+        "heartbeat": { "every": "4h" }
+      },
+      {
+        "id": "documentation-agent",
+        "name": "Documentation",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/documentation-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Documentation", "emoji": "📄" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "quality-improvement-agent",
+        "name": "Quality Improvement",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/quality-improvement-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Quality Improvement", "emoji": "📊" },
+        "tools": { "profile": "full" },
+        "heartbeat": { "every": "12h" }
+      },
+      {
+        "id": "it-help-desk-agent",
+        "name": "IT Help Desk",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/it-help-desk-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "IT Help Desk", "emoji": "💻" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "knowledge-management-agent",
+        "name": "Knowledge Management",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/knowledge-management-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Knowledge Management", "emoji": "📚" },
+        "tools": { "profile": "full" }
+      }
+    ]
+  }
+}

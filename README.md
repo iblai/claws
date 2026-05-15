@@ -4,7 +4,7 @@
 
 # Claw Agents
 
-48 pre-built agent configurations for [OpenClaw](https://github.com/iblai/iblai-claw-setup) instances, organized by vertical. Each agent is a workspace-ready set of configuration files that can be pushed to a claw instance via the [ibl.ai platform API](https://github.com/iblai/iblai-claw-setup/blob/main/docs/platform-integration.md).
+Drop-in [OpenClaw](https://github.com/iblai/iblai-claw-setup) / [NemoClaw](https://github.com/NVIDIA/NemoClaw) agent configurations for every [ibl.ai](https://ibl.ai) solution segment. Each segment is a complete multi-agent system — one parent orchestrator plus a roster of specialist subagents — packaged so a NemoClaw host can import it with zero conversion.
 
 [![OpenClaw](https://img.shields.io/badge/OpenClaw-292929?logoColor=white)](https://github.com/iblai/iblai-claw-setup)
 [![NemoClaw](https://img.shields.io/badge/NemoClaw-76B900?logo=nvidia&logoColor=white)](https://github.com/NVIDIA/NemoClaw)
@@ -15,208 +15,143 @@
 
 ---
 
-## Agent Configuration
+## Overview
 
-Each agent directory contains workspace files that map to the [agent configuration API](https://github.com/iblai/iblai-claw-setup/blob/main/docs/platform-integration.md#configure-the-agent):
+This repository contains **7 segment configurations**, one for each segment in the ibl.ai Solutions menu. Every segment directory is a self-contained OpenClaw gateway config: copy its contents into `/sandbox/.openclaw/` on a NemoClaw host, recompute one hash, and reload the gateway.
 
-| File | API Field | Pushed As | Description |
-|------|-----------|-----------|-------------|
-| `IDENTITY.md` | `identity` | IDENTITY.md | Agent persona -- name, role, vibe |
-| `SOUL.md` | `soul` | SOUL.md | Behavioral guidelines -- personality, values, boundaries |
-| `MODEL.md` | `model` | config.patch | LLM model identifier |
-| `CONFIG.json` | `config` | config.patch | Instance settings (heartbeat schedule, session isolation) |
-| `USER.md` | `user_context` | USER.md | User-specific environment details |
-| `TOOLS.md` | `tools` | TOOLS.md | Environment-specific reference notes for tool usage |
-| `AGENTS.md` | `agents` | AGENTS.md | Multi-agent routing configuration |
-| `BOOTSTRAP.md` | `bootstrap` | BOOTSTRAP.md | One-time first-run instructions (consumed after use) |
-| `HEARTBEAT.md` | `heartbeat` | HEARTBEAT.md | Periodic awareness checklist content |
-| `MEMORY.md` | `memory` | MEMORY.md | Seed memory -- long-term curated facts |
-| `SECURITY.md` | -- | -- | [NemoClaw](https://github.com/NVIDIA/NemoClaw) sandbox security policy |
+| Segment | Parent agent | Subagents | Tool skills |
+|---------|--------------|-----------|-------------|
+| [`higher-education/`](higher-education/) | Campus Assistant | 16 | 10 |
+| [`k-12/`](k-12/) | School Assistant | 12 | 12 |
+| [`enterprise/`](enterprise/) | Workplace Assistant | 12 | 12 |
+| [`government/`](government/) | Agency Assistant | 12 | 10 |
+| [`legal/`](legal/) | Firm Assistant | 12 | 11 |
+| [`financial-services/`](financial-services/) | Advisory Assistant | 12 | 11 |
+| [`medical-healthcare/`](medical-healthcare/) | Care Assistant | 12 | 10 |
 
-All text fields are optional. Each agent has its own directory with one file per configuration option. `SECURITY.md` defines the [NemoClaw](https://github.com/NVIDIA/NemoClaw) sandbox policy (network egress, filesystem, process isolation, inference routing).
+**95 agents** (7 parents + 88 specialists) and **76 tool skills** in total. This is a configuration-only repository — no application code, build system, or tests.
 
-## Repository Structure
+## How a segment is structured
+
+Each segment has one **parent agent** (the default entry point) and a set of **specialist subagents**. The parent interprets each request and delegates to the right specialist via the `sessions_spawn` tool; the subagents it may spawn are listed in its `subagents.allowAgents`. The parent then synthesizes the results.
 
 ```
-agents/
-├── higher-education/           # University and college agents (12)
-│   ├── enrollment-agent/
-│   ├── application-reader-agent/
-│   ├── financial-aid-agent/
-│   ├── academic-advisor-agent/
-│   ├── tutoring-agent/
-│   ├── retention-agent/
-│   ├── student-services-agent/
-│   ├── career-services-agent/
-│   ├── faculty-agent/
-│   ├── research-agent/
-│   ├── alumni-agent/
-│   └── it-help-desk-agent/
-├── enterprise/                 # Corporate and business agents (16)
-│   ├── personal-learning-agent/
-│   ├── onboarding-agent/
-│   ├── career-development-agent/
-│   ├── training-creation-agent/
-│   ├── knowledge-management-agent/
-│   ├── hr-support-agent/
-│   ├── it-help-desk-agent/
-│   ├── compliance-agent/
-│   ├── sales-enablement-agent/
-│   ├── operations-agent/
-│   ├── knowledge-agent/
-│   ├── customer-support-agent/
-│   ├── meeting-agent/
-│   ├── marketing-agent/
-│   ├── engineering-agent/
-│   └── data-analysis-agent/
-├── k-12/                       # K-12 education agents (12)
-│   ├── tutoring-agent/
-│   ├── lesson-planning-agent/
-│   ├── assessment-agent/
-│   ├── writing-feedback-agent/
-│   ├── special-education-agent/
-│   ├── content-creation-agent/
-│   ├── student-safety-agent/
-│   ├── family-communication-agent/
-│   ├── curriculum-alignment-agent/
-│   ├── professional-development-agent/
-│   ├── research-agent/
-│   └── administration-agent/
-└── small-business/             # Small business agents (8)
-    ├── customer-support-agent/
-    ├── sales-agent/
-    ├── bookkeeping-agent/
-    ├── social-media-agent/
-    ├── scheduling-agent/
-    ├── hiring-agent/
-    ├── inventory-agent/
-    └── website-agent/
+<segment>/
+├── README.md                  # segment overview + import steps
+├── openclaw.json              # gateway config — every agent, model, sandbox, skills
+├── .config-hash               # sha256 of openclaw.json
+├── .env.example               # template for ~/.openclaw/.env (sample credentials)
+├── workspace/
+│   └── .gitkeep               # shared writable workspace (empty at install)
+├── skills/
+│   └── <tool>/
+│       └── SKILL.md           # one skill directory per major third-party tool
+└── agents/
+    └── <agent-id>/
+        └── agent/
+            ├── IDENTITY.md          # persona — name, role, vibe
+            ├── SOUL.md              # behavioral guidelines
+            ├── TOOLS.md             # tool/integration notes + data sources
+            ├── AGENTS.md            # multi-agent routing table (parent only)
+            ├── USER.md              # user/environment context    (optional)
+            ├── BOOTSTRAP.md         # one-time first-run setup     (optional)
+            ├── HEARTBEAT.md         # periodic awareness checklist (optional)
+            ├── MEMORY.md            # seed long-term facts         (optional)
+            └── auth-profiles.json   # per-agent provider credentials (sample)
 ```
 
-## Usage
+### Runtime-only by design
 
-### Push an agent to your claw instance
+The repo contains **only what the OpenClaw/NemoClaw runtime actually loads** — the per-agent files above plus `openclaw.json`, `.config-hash`, `skills/`, and `.env.example`. Model, instance config, sandbox/security policy, and skill wiring all live in `openclaw.json`; there is no `MODEL.md`, `CONFIG.json`, `SECURITY.md`, or `DATA.md`, because the runtime never read them. Optional files (`USER.md`, `BOOTSTRAP.md`, `HEARTBEAT.md`, `MEMORY.md`) appear only on agents that genuinely need them.
 
-1. Choose an agent from `agents/<vertical>/<agent-name>/`
-2. Use the file contents as field values in the agent configuration API:
+### `openclaw.json`
+
+The OpenClaw gateway configuration. Every agent — parent and subagents — is declared in `agents.list[]`. The parent carries `default: true` and a `subagents.allowAgents` list naming every child. `agents.defaults` holds the shared `model`, `subagents` limits, the `skills` array, and the `sandbox` block (the runtime's security policy). Each agent entry points at its workspace via `agentDir`, and carries its `model` and any `heartbeat`/`session` settings. After any edit to `openclaw.json`, recompute `.config-hash`.
+
+### Skills & credentials
+
+`skills/` holds one skill **directory** per major platform popular in the segment (Canvas, Banner, Salesforce, ServiceNow, Epic FHIR, Westlaw, and so on) — each a `<tool>/SKILL.md` with `name`, `description`, and a single-line `metadata` declaring the env vars it needs. `agents.defaults.skills` in `openclaw.json` wires them to the agents by name. Skill credentials resolve from environment variables; `.env.example` is the committed template for the OpenClaw daemon env file `~/.openclaw/.env`.
+
+Both `auth-profiles.json` (per-agent LLM provider keys) and `.env.example` (per-tool API credentials) ship with **clearly-marked, non-functional sample placeholders**. Replace them with real values before deploying.
+
+## Importing a segment to NemoClaw
 
 ```bash
-AGENT_DIR="agents/higher-education/tutoring-agent"
+# 1. Copy the segment into the sandbox config root
+cp -r higher-education/. /sandbox/.openclaw/
 
-# Read each config file
-IDENTITY=$(cat "$AGENT_DIR/IDENTITY.md")
-SOUL=$(cat "$AGENT_DIR/SOUL.md")
-TOOLS=$(cat "$AGENT_DIR/TOOLS.md")
-MODEL=$(cat "$AGENT_DIR/MODEL.md")
-CONFIG=$(cat "$AGENT_DIR/CONFIG.json" 2>/dev/null || echo '{}')
+# 2. Give the sandbox user ownership of the agent workspaces
+chown -R sandbox:sandbox /sandbox/.openclaw/agents/
 
-# Push to your agent config
-curl -X PATCH "https://platform.ibl.ai/api/ai-mentor/orgs/$ORG/agent-configs/$AGENT_ID/" \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Token $API_TOKEN" \
-  -d "$(jq -n \
-    --arg identity "$IDENTITY" \
-    --arg soul "$SOUL" \
-    --arg tools "$TOOLS" \
-    --arg model "$MODEL" \
-    --argjson config "$CONFIG" \
-    '{identity: $identity, soul: $soul, tools: $tools, model: $model, config: $config}'
-  )"
+# 3. Fill in real credentials
+cp /sandbox/.openclaw/.env.example ~/.openclaw/.env
+#    edit ~/.openclaw/.env and each agents/*/agent/auth-profiles.json
+
+# 4. Recompute the config hash
+cd /sandbox/.openclaw && sha256sum openclaw.json > .config-hash
+
+# 5. Reload the gateway
+openclaw reload
 ```
 
-3. Push the configuration to the instance:
+Each segment's own `README.md` carries the full step-by-step.
 
-```bash
-curl -X POST "https://platform.ibl.ai/api/ai-mentor/orgs/$ORG/claw/mentor-configs/$MENTOR_CONFIG_ID/push-config/" \
-  -H "Authorization: Token $API_TOKEN"
-```
+## Agent rosters
 
-### Adding a new agent
+<details>
+<summary><strong>Higher Education</strong> — Campus Assistant + 16 specialists</summary>
 
-1. Create a directory under the appropriate vertical: `agents/<vertical>/<agent-name>/`
-2. Add at minimum `IDENTITY.md`, `SOUL.md`, and `MODEL.md`
-3. Add `SECURITY.md` with a [NemoClaw](https://github.com/NVIDIA/NemoClaw) sandbox policy
-4. Add optional workspace files (`TOOLS.md`, `MEMORY.md`, `HEARTBEAT.md`, etc.) as needed
-5. Add `CONFIG.json` only if the agent needs non-default instance settings
+Enrollment · Application Reader · Financial Aid · Academic Advisor · Tutoring · Retention · Student Services · Career Services · Faculty · Research · Alumni · IT Help Desk · Prospective Student · Yield · Continuing Education · Administrative
+</details>
 
-## Verticals
+<details>
+<summary><strong>K-12</strong> — School Assistant + 12 specialists</summary>
 
-### Higher Education
+Tutoring · Lesson Planning · Assessment · Writing Feedback · Special Education · Content Creation · Student Safety · Family Communication · Curriculum Alignment · Professional Development · Research · Administration
+</details>
 
-12 agents covering the complete student lifecycle -- from enrollment through alumni engagement. Designed for universities and colleges.
+<details>
+<summary><strong>Enterprise</strong> — Workplace Assistant + 12 specialists</summary>
 
-| Agent | Role |
-|-------|------|
-| Enrollment Agent | Recruitment campaigns and admissions inquiries |
-| Application Reader Agent | Application scoring and transcript evaluation |
-| Financial Aid Agent | FAFSA support, aid eligibility, scholarship matching |
-| Academic Advisor Agent | Degree planning, course registration, graduation requirements |
-| Tutoring Agent | Personalized 1-on-1 academic support across subjects |
-| Retention Agent | At-risk student identification and early intervention |
-| Student Services Agent | Housing, campus life, and wellness support |
-| Career Services Agent | Resume building, interview prep, job search |
-| Faculty Agent | Syllabus creation, grading, course material development |
-| Research Agent | Literature review, citation management, grant writing |
-| Alumni Agent | Alumni engagement, fundraising, event coordination |
-| IT Help Desk Agent | Technical support for campus systems |
+Knowledge · IT Help Desk · Sales Enablement · Customer Support · Onboarding · HR · Marketing · Engineering · Meeting · Training · Data Analysis · Operations
+</details>
 
-### Enterprise
+<details>
+<summary><strong>Government</strong> — Agency Assistant + 12 specialists</summary>
 
-16 agents spanning employee development, manager productivity, and workforce operations. Built for corporate learning and operational support.
+Citizen Services · Knowledge · IT Help Desk · Employee Training · Compliance · Legislative · Budget · HR · Procurement · Onboarding · Constituent Communication · Security
+</details>
 
-| Agent | Role |
-|-------|------|
-| Personal Learning Agent | Skill development, certification prep, learning paths |
-| Onboarding Agent | New hire orientation, policy guidance, system access |
-| Career Development Agent | Internal mobility, skill gap analysis, promotion readiness |
-| Training Creation Agent | Course development, assessment generation, compliance modules |
-| Knowledge Management Agent | Knowledge capture, process documentation, preservation |
-| HR Support Agent | Policy Q&A, performance reviews, leave management |
-| IT Help Desk Agent | Technical support, password resets, troubleshooting |
-| Compliance Agent | Regulatory training, certification tracking, audit prep |
-| Sales Enablement Agent | Product knowledge, competitive intelligence, pitch prep |
-| Operations Agent | SOP guidance, safety protocols, quality standards |
-| Knowledge Agent | Enterprise search and institutional knowledge access |
-| Customer Support Agent | Ticket resolution, customer inquiries, follow-ups |
-| Meeting Agent | Meeting recaps, action items, follow-up tracking |
-| Marketing Agent | Content creation, campaign planning, SEO |
-| Engineering Agent | Code review, documentation, project onboarding |
-| Data Analysis Agent | Reports, trend analysis, data-driven insights |
+<details>
+<summary><strong>Legal</strong> — Firm Assistant + 12 specialists</summary>
 
-### K-12
+Case Research · Contract Review · Client Intake · Billing & Time · Discovery · Compliance · Knowledge · Brief Drafting · Conflicts Check · Training · Docket Management · IT Help Desk
+</details>
 
-12 agents supporting students, teachers, and administrators across the K-12 spectrum. Designed for school districts and education organizations with FERPA and COPPA compliance.
+<details>
+<summary><strong>Financial Services</strong> — Advisory Assistant + 12 specialists</summary>
 
-| Agent | Role |
-|-------|------|
-| Tutoring Agent | Adaptive homework help and academic support |
-| Lesson Planning Agent | Standards-aligned lesson and unit plan creation |
-| Assessment Agent | Quiz generation, rubric creation, and auto-grading |
-| Writing Feedback Agent | Student writing review and developmental feedback |
-| Special Education Agent | IEP, 504, and accommodation planning support |
-| Content Creation Agent | Worksheets, presentations, and classroom activities |
-| Student Safety Agent | Content moderation, safety guardrails, and digital wellness |
-| Family Communication Agent | Parent updates, newsletters, and multilingual communication |
-| Curriculum Alignment Agent | Standards mapping, vertical alignment, and curriculum compliance |
-| Professional Development Agent | Teacher training, instructional coaching, and professional growth |
-| Research Agent | Age-appropriate research support and source evaluation |
-| Administration Agent | Scheduling, reporting, and district operations support |
+Compliance · Risk Assessment · Client Advisory · Regulatory Reporting · Portfolio Analysis · Employee Training · KYC/AML · Fraud Detection · Client Onboarding · Knowledge · IT Help Desk · Operations
+</details>
 
-### Small Business
+<details>
+<summary><strong>Medical / Healthcare</strong> — Care Assistant + 12 specialists</summary>
 
-8 agents covering core small business operations -- from customer acquisition through financial management. Built for lean teams that need to do more with less.
+Clinical Support · Patient Education · Medical Coding · Compliance Training · Research · Provider Onboarding · Prior Authorization · Care Coordination · Documentation · Quality Improvement · IT Help Desk · Knowledge Management
+</details>
 
-| Agent | Role |
-|-------|------|
-| Customer Support Agent | Customer inquiry handling, review management, service recovery |
-| Sales Agent | Lead follow-up, proposal generation, pipeline management |
-| Bookkeeping Agent | Invoicing, expense tracking, financial reporting, tax prep |
-| Social Media Agent | Content creation, scheduling, community management |
-| Scheduling Agent | Appointment booking, calendar management, reminders |
-| Hiring Agent | Job posting, resume screening, interview scheduling |
-| Inventory Agent | Stock tracking, reordering, supplier coordination |
-| Website Agent | Website content updates, SEO optimization, analytics |
+## Adding an agent to a segment
+
+1. Create `<segment>/agents/<agent-name>-agent/agent/` with `IDENTITY.md`, `SOUL.md`, `TOOLS.md`, and `auth-profiles.json` (add `USER.md`/`BOOTSTRAP.md`/`HEARTBEAT.md`/`MEMORY.md` only if warranted).
+2. Add an entry to `agents.list[]` in `<segment>/openclaw.json` (set `id`, `name`, `agentDir`, `model`, `identity`, `tools`).
+3. Add the new id to the parent agent's `subagents.allowAgents` and to its `AGENTS.md` routing table.
+4. Recompute the hash: `sha256sum openclaw.json > .config-hash`.
+5. Update the segment `README.md` and the roster in this file.
+
+## Adding a new segment
+
+Mirror an existing segment directory: a parent agent plus specialist subagents, an `openclaw.json` declaring them all, a `skills/` directory of `<tool>/SKILL.md` directories, `.env.example`, a `README.md`, and a recomputed `.config-hash`.
 
 ## License
 
-Proprietary -- ibl.ai
+Proprietary — ibl.ai

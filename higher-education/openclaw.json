@@ -1,0 +1,202 @@
+{
+  "agents": {
+    "defaults": {
+      "workspace": "/sandbox/.openclaw/workspace",
+      "model": { "primary": "anthropic/claude-sonnet-4-5-20250929" },
+      "subagents": { "maxConcurrent": 8, "maxChildrenPerAgent": 20, "runTimeoutSeconds": 900, "archiveAfterMinutes": 60 },
+      "sandbox": { "mode": "all", "backend": "openshell", "scope": "agent", "workspaceAccess": "rw" },
+      "skills": [
+        "canvas",
+        "slate",
+        "banner",
+        "eab-navigate",
+        "workday",
+        "salesforce-education-cloud",
+        "servicenow",
+        "handshake",
+        "civitas-learning",
+        "blackbaud-raisers-edge"
+      ]
+    },
+    "list": [
+      {
+        "id": "higher-education-assistant",
+        "default": true,
+        "name": "Campus Assistant",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/higher-education-assistant/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Campus Assistant", "emoji": "🎓" },
+        "tools": { "profile": "full" },
+        "subagents": {
+          "allowAgents": [
+            "enrollment-agent",
+            "application-reader-agent",
+            "financial-aid-agent",
+            "academic-advisor-agent",
+            "tutoring-agent",
+            "retention-agent",
+            "student-services-agent",
+            "career-services-agent",
+            "faculty-agent",
+            "research-agent",
+            "alumni-agent",
+            "it-help-desk-agent",
+            "prospective-student-agent",
+            "yield-agent",
+            "continuing-education-agent",
+            "administrative-agent"
+          ],
+          "delegationMode": "prefer",
+          "maxSpawnDepth": 2
+        }
+      },
+      {
+        "id": "enrollment-agent",
+        "name": "Enrollment Agent",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/enrollment-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Enrollment Agent", "emoji": "📋" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "application-reader-agent",
+        "name": "Application Reader Agent",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/application-reader-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Application Reader Agent", "emoji": "📄" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "financial-aid-agent",
+        "name": "Financial Aid Agent",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/financial-aid-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Financial Aid Agent", "emoji": "💰" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "academic-advisor-agent",
+        "name": "Academic Advisor Agent",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/academic-advisor-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Academic Advisor Agent", "emoji": "🗓️" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "tutoring-agent",
+        "name": "Tutoring Agent",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/tutoring-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Tutoring Agent", "emoji": "📚" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "retention-agent",
+        "name": "Retention Agent",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/retention-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Retention Agent", "emoji": "🤝" },
+        "tools": { "profile": "full" },
+        "heartbeat": { "every": "6h" }
+      },
+      {
+        "id": "student-services-agent",
+        "name": "Student Services Agent",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/student-services-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Student Services Agent", "emoji": "🏠" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "career-services-agent",
+        "name": "Career Services Agent",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/career-services-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Career Services Agent", "emoji": "💼" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "faculty-agent",
+        "name": "Faculty Agent",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/faculty-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Faculty Agent", "emoji": "🏫" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "research-agent",
+        "name": "Research Agent",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/research-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Research Agent", "emoji": "🔬" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "alumni-agent",
+        "name": "Alumni Agent",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/alumni-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Alumni Agent", "emoji": "🎗️" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "it-help-desk-agent",
+        "name": "IT Help Desk Agent",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/it-help-desk-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "IT Help Desk Agent", "emoji": "💻" },
+        "tools": { "profile": "full" },
+        "heartbeat": { "every": "1h" }
+      },
+      {
+        "id": "prospective-student-agent",
+        "name": "Prospective Student Agent",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/prospective-student-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Prospective Student Agent", "emoji": "🌟" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "yield-agent",
+        "name": "Yield Agent",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/yield-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Yield Agent", "emoji": "📈" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "continuing-education-agent",
+        "name": "Continuing Education Agent",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/continuing-education-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Continuing Education Agent", "emoji": "🎯" },
+        "tools": { "profile": "full" }
+      },
+      {
+        "id": "administrative-agent",
+        "name": "Administrative Agent",
+        "workspace": "/sandbox/.openclaw/workspace",
+        "agentDir": "/sandbox/.openclaw/agents/administrative-agent/agent",
+        "model": "anthropic/claude-sonnet-4-5-20250929",
+        "identity": { "name": "Administrative Agent", "emoji": "🏛️" },
+        "tools": { "profile": "full" }
+      }
+    ]
+  }
+}
