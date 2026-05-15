@@ -60,6 +60,12 @@ Skill credentials resolve from environment variables (the OpenClaw daemon loads 
 - The parent delegates via the `sessions_spawn` tool; allowed children are in its `subagents.allowAgents`, routing is documented in `AGENTS.md`.
 - Subagent ids are kebab-case with an `-agent` suffix. All agents default to `anthropic/claude-sonnet-4-5-20250929`.
 
+## Installing a segment
+
+A segment installs onto an OpenClaw/NemoClaw host (set up per [iblai-claw-setup](https://github.com/iblai/iblai-claw-setup)) by copying `<segment>/`'s contents into the config root — `/sandbox/.openclaw/` for NemoClaw, `~/.openclaw/` for standalone OpenClaw — then filling credentials, recomputing `.config-hash`, and reloading the gateway. Copying one segment installs its parent plus every subagent at once.
+
+The root `README.md` carries two install sections that MUST stay accurate: **"Installing a segment"** (manual `cp`-based steps) and **"Installing a segment with Claude Code"** (a paste-in runbook an agent runs on the host to install a segment straight from this GitHub repo). When config paths, install/reload commands, or the segment list change, update both — and the per-segment `README.md` import sections.
+
 ## Conventions
 
 - `openclaw.json` is strict JSON. After ANY edit, recompute the hash from inside the segment dir: `shasum -a 256 openclaw.json > .config-hash`.
@@ -78,4 +84,4 @@ Skill credentials resolve from environment variables (the OpenClaw daemon loads 
 
 ## Adding a New Segment
 
-Mirror an existing segment: parent + subagents, `openclaw.json`, `skills/<tool>/SKILL.md` directories, `.env.example`, `workspace/.gitkeep`, `README.md`, recomputed `.config-hash`.
+Mirror an existing segment: parent + subagents, `openclaw.json`, `skills/<tool>/SKILL.md` directories, `.env.example`, `workspace/.gitkeep`, `README.md`, recomputed `.config-hash`. Then add the new segment to the root `README.md` — the overview table, the agent-roster list, and the `<segment>` list in the **"Installing a segment with Claude Code"** runbook.

@@ -74,27 +74,61 @@ The OpenClaw gateway configuration. Every agent — parent and subagents — is 
 
 Both `auth-profiles.json` (per-agent LLM provider keys) and `.env.example` (per-tool API credentials) ship with **clearly-marked, non-functional sample placeholders**. Replace them with real values before deploying.
 
-## Importing a segment to NemoClaw
+## Installing a segment
+
+Each segment directory drops onto an OpenClaw/NemoClaw host with no conversion. Set the host up first with the [iblai-claw-setup](https://github.com/iblai/iblai-claw-setup) guide (`docs/server-setup.md`) — that installs the gateway, the `openclaw-gateway` service, and the config root.
+
+The config root is **`/sandbox/.openclaw/`** on a NemoClaw sandbox host, or **`~/.openclaw/`** for a standalone OpenClaw install. Substitute whichever applies in the steps below.
 
 ```bash
-# 1. Copy the segment into the sandbox config root
+# 1. Get this repo
+git clone https://github.com/iblai/iblai-claw-agents.git
+cd iblai-claw-agents
+
+# 2. Copy the segment's contents into the config root (NemoClaw path shown)
 cp -r higher-education/. /sandbox/.openclaw/
+#    contents land directly at the root — openclaw.json, agents/, skills/, workspace/
 
-# 2. Give the sandbox user ownership of the agent workspaces
-chown -R sandbox:sandbox /sandbox/.openclaw/agents/
+# 3. Give the sandbox user ownership of the agent workspaces (NemoClaw only)
+chown -R sandbox:sandbox /sandbox/.openclaw/agents/ /sandbox/.openclaw/workspace/
 
-# 3. Fill in real credentials
+# 4. Fill in real credentials
 cp /sandbox/.openclaw/.env.example ~/.openclaw/.env
-#    edit ~/.openclaw/.env and each agents/*/agent/auth-profiles.json
+vi ~/.openclaw/.env                       # third-party platform API keys
+#    and replace the sample apiKey in every agents/*/agent/auth-profiles.json
 
-# 4. Recompute the config hash
-cd /sandbox/.openclaw && sha256sum openclaw.json > .config-hash
+# 5. Recompute the config hash (the gateway refuses to start on a mismatch)
+cd /sandbox/.openclaw && shasum -a 256 openclaw.json > .config-hash
 
-# 5. Reload the gateway
-openclaw reload
+# 6. Reload the gateway
+openclaw gateway reload                   # or: systemctl restart openclaw-gateway
+
+# 7. Verify the parent agent is live
+openclaw agent list                       # <segment>-assistant shows default: true, ready
 ```
 
-Each segment's own `README.md` carries the full step-by-step.
+Copying a segment installs its **parent orchestrator and every specialist subagent at once** — they are all declared in that segment's `openclaw.json`. Each segment's own `README.md` carries the full roster and step-by-step.
+
+## Installing a segment with Claude Code
+
+If Claude Code (or any agent that can run a shell) is running on the OpenClaw/NemoClaw host, hand it the runbook below — it points at this repo and installs a full segment, parent plus all subagents, into the live environment.
+
+> **Install runbook — paste into Claude Code on the host**
+>
+> Install the `<segment>` agent configuration from https://github.com/iblai/iblai-claw-agents into this OpenClaw/NemoClaw environment. `<segment>` is one of: `higher-education`, `k-12`, `enterprise`, `government`, `legal`, `financial-services`, `medical-healthcare`.
+>
+> 1. Confirm the OpenClaw config root: `/sandbox/.openclaw/` on a NemoClaw sandbox host, `~/.openclaw/` for standalone OpenClaw. Confirm the gateway is installed (`openclaw --version`); if not, stop and point the user to https://github.com/iblai/iblai-claw-setup.
+> 2. Clone the repo to a temp dir: `git clone https://github.com/iblai/iblai-claw-agents.git /tmp/iblai-claw-agents` (or `git -C /tmp/iblai-claw-agents pull` if already present).
+> 3. Copy the chosen segment's contents into the config root: `cp -r /tmp/iblai-claw-agents/<segment>/. <config-root>/`. The contents (`openclaw.json`, `agents/`, `skills/`, `workspace/`, `.env.example`) must land directly in the root, not in a subdirectory.
+> 4. On a NemoClaw host, set ownership: `chown -R sandbox:sandbox <config-root>/agents/ <config-root>/workspace/`.
+> 5. Credentials — never invent values. Copy `<config-root>/.env.example` to `~/.openclaw/.env` and tell the user which variables need real keys. Every `agents/*/agent/auth-profiles.json` ships a sample placeholder `apiKey`; tell the user to replace each with a real Anthropic API key. Do not start the gateway until the user confirms credentials are in place.
+> 6. Recompute the hash from inside the config root: `cd <config-root> && shasum -a 256 openclaw.json > .config-hash`.
+> 7. Reload the gateway: `openclaw gateway reload` (or `systemctl restart openclaw-gateway`).
+> 8. Verify: `openclaw agent list` — the `<segment>-assistant` parent should show `default: true` and status `ready`, alongside every subagent from that segment.
+>
+> Report which segment was installed, how many agents are now registered, and any credential variables still left as placeholders.
+
+This installs the **whole segment** — one parent and all its specialists. To run more than one segment on the same host, the segments' `openclaw.json` files must be merged rather than copied over each other; that is a manual step beyond this runbook.
 
 ## Agent rosters
 
