@@ -21,13 +21,13 @@ This repository contains **7 segment configurations**, one for each segment in t
 
 | Segment | Parent agent | Subagents | Tool skills |
 |---------|--------------|-----------|-------------|
-| [`higher-education/`](higher-education/) | Campus Assistant | 16 | 10 |
-| [`k-12/`](k-12/) | School Assistant | 12 | 12 |
-| [`enterprise/`](enterprise/) | Workplace Assistant | 12 | 12 |
-| [`government/`](government/) | Agency Assistant | 12 | 10 |
-| [`legal/`](legal/) | Firm Assistant | 12 | 11 |
-| [`financial-services/`](financial-services/) | Advisory Assistant | 12 | 11 |
-| [`medical-healthcare/`](medical-healthcare/) | Care Assistant | 12 | 10 |
+| [`higher-education`](https://github.com/iblai/higher-education-agents) | Campus Assistant | 16 | 10 |
+| [`k-12`](https://github.com/iblai/k-12-agents) | School Assistant | 12 | 12 |
+| [`enterprise`](https://github.com/iblai/enterprise-agents) | Workplace Assistant | 12 | 12 |
+| [`government`](https://github.com/iblai/government-agents) | Agency Assistant | 12 | 10 |
+| [`legal`](https://github.com/iblai/legal-agents) | Firm Assistant | 12 | 11 |
+| [`financial-services`](https://github.com/iblai/financial-services-agents) | Advisory Assistant | 12 | 11 |
+| [`medical-healthcare`](https://github.com/iblai/medical-healthcare-agents) | Care Assistant | 12 | 10 |
 
 **95 agents** (7 parents + 88 specialists) and **76 tool skills** in total. This is a configuration-only repository — no application code, build system, or tests.
 
