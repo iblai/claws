@@ -1,0 +1,21 @@
+[submodule "higher-education"]
+	path = higher-education
+	url = https://github.com/iblai/higher-education-agents.git
+[submodule "k-12"]
+	path = k-12
+	url = https://github.com/iblai/k-12-agents.git
+[submodule "enterprise"]
+	path = enterprise
+	url = https://github.com/iblai/enterprise-agents.git
+[submodule "government"]
+	path = government
+	url = https://github.com/iblai/government-agents.git
+[submodule "legal"]
+	path = legal
+	url = https://github.com/iblai/legal-agents.git
+[submodule "financial-services"]
+	path = financial-services
+	url = https://github.com/iblai/financial-services-agents.git
+[submodule "medical-healthcare"]
+	path = medical-healthcare
+	url = https://github.com/iblai/medical-healthcare-agents.git
