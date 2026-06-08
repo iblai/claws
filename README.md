@@ -17,7 +17,7 @@ Drop-in [OpenClaw](https://github.com/iblai/iblai-claw-setup) / [NemoClaw](https
 
 ## Overview
 
-This repository contains **7 segment configurations**, one for each segment in the ibl.ai Solutions menu. Every segment directory is a self-contained OpenClaw gateway config: copy its contents into `/sandbox/.openclaw/` on a NemoClaw host, recompute one hash, and reload the gateway.
+This repository contains **7 segment configurations**, one for each segment in the ibl.ai Solutions menu. Each segment is its own repository (`github.com/iblai/<segment>-agents`), aggregated here as a **git submodule** — so the `<segment>/` directories populate only after a recursive clone (`git clone --recurse-submodules`) or `git submodule update --init`. Every segment is a self-contained OpenClaw gateway config: copy its contents into `/sandbox/.openclaw/` on a NemoClaw host, recompute one hash, and reload the gateway.
 
 | Segment | Parent agent | Subagents | Tool skills |
 |---------|--------------|-----------|-------------|
@@ -81,13 +81,14 @@ Each segment directory drops onto an OpenClaw/NemoClaw host with no conversion. 
 The config root is **`/sandbox/.openclaw/`** on a NemoClaw sandbox host, or **`~/.openclaw/`** for a standalone OpenClaw install. Substitute whichever applies in the steps below.
 
 ```bash
-# 1. Get this repo
-git clone https://github.com/iblai/iblai-claw-agents.git
-cd iblai-claw-agents
+# 1. Get the segment — each segment is its own repo
+git clone https://github.com/iblai/higher-education-agents.git
+cd higher-education-agents
+#    (or grab all 7 at once: git clone --recurse-submodules https://github.com/iblai/claws.git)
 
-# 2. Copy the segment's contents into the config root (NemoClaw path shown)
-cp -r higher-education/. /sandbox/.openclaw/
-#    contents land directly at the root — openclaw.json, agents/, skills/, workspace/
+# 2. Copy the config into the config root, excluding git metadata (NemoClaw path shown)
+cp -r openclaw.json .config-hash .env.example agents skills workspace /sandbox/.openclaw/
+#    these land directly at the root — openclaw.json, agents/, skills/, workspace/
 
 # 3. Give the sandbox user ownership of the agent workspaces (NemoClaw only)
 chown -R sandbox:sandbox /sandbox/.openclaw/agents/ /sandbox/.openclaw/workspace/
@@ -115,11 +116,11 @@ If Claude Code (or any agent that can run a shell) is running on the OpenClaw/Ne
 
 > **Install runbook — paste into Claude Code on the host**
 >
-> Install the `<segment>` agent configuration from https://github.com/iblai/iblai-claw-agents into this OpenClaw/NemoClaw environment. `<segment>` is one of: `higher-education`, `k-12`, `enterprise`, `government`, `legal`, `financial-services`, `medical-healthcare`.
+> Install the `<segment>` agent configuration from its repo at `https://github.com/iblai/<segment>-agents` into this OpenClaw/NemoClaw environment. `<segment>` is one of: `higher-education`, `k-12`, `enterprise`, `government`, `legal`, `financial-services`, `medical-healthcare`.
 >
 > 1. Confirm the OpenClaw config root: `/sandbox/.openclaw/` on a NemoClaw sandbox host, `~/.openclaw/` for standalone OpenClaw. Confirm the gateway is installed (`openclaw --version`); if not, stop and point the user to https://github.com/iblai/iblai-claw-setup.
-> 2. Clone the repo to a temp dir: `git clone https://github.com/iblai/iblai-claw-agents.git /tmp/iblai-claw-agents` (or `git -C /tmp/iblai-claw-agents pull` if already present).
-> 3. Copy the chosen segment's contents into the config root: `cp -r /tmp/iblai-claw-agents/<segment>/. <config-root>/`. The contents (`openclaw.json`, `agents/`, `skills/`, `workspace/`, `.env.example`) must land directly in the root, not in a subdirectory.
+> 2. Clone the segment's repo to a temp dir: `git clone https://github.com/iblai/<segment>-agents.git /tmp/<segment>-agents` (or `git -C /tmp/<segment>-agents pull` if already present).
+> 3. Copy the segment's config files into the config root, skipping `.git/`: `cp -r /tmp/<segment>-agents/{openclaw.json,.config-hash,.env.example,agents,skills,workspace} <config-root>/`. They must land directly in the root, not in a subdirectory.
 > 4. On a NemoClaw host, set ownership: `chown -R sandbox:sandbox <config-root>/agents/ <config-root>/workspace/`.
 > 5. Credentials — never invent values. Copy `<config-root>/.env.example` to `~/.openclaw/.env` and tell the user which variables need real keys. Every `agents/*/agent/auth-profiles.json` ships a sample placeholder `apiKey`; tell the user to replace each with a real Anthropic API key. Do not start the gateway until the user confirms credentials are in place.
 > 6. Recompute the hash from inside the config root: `cd <config-root> && shasum -a 256 openclaw.json > .config-hash`.

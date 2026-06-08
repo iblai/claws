@@ -6,11 +6,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A library of drop-in [OpenClaw](https://github.com/iblai/iblai-claw-setup) / [NemoClaw](https://github.com/NVIDIA/NemoClaw) agent configurations, one per [ibl.ai](https://ibl.ai) solution segment. The 7 segments are `higher-education`, `k-12`, `enterprise`, `government`, `legal`, `financial-services`, and `medical-healthcare`. Each segment is a complete multi-agent system — a parent orchestrator plus specialist subagents — that a NemoClaw host imports by copying it into `/sandbox/.openclaw/`.
 
+Each segment is published as its own repository (`github.com/iblai/<segment>-agents`). This `claws` repo (`github.com/iblai/claws`) is the umbrella: it aggregates the 7 segment repos as **git submodules** and carries only `README.md`, `CLAUDE.md`, and `.gitmodules` at its own root. Clone it with `git clone --recurse-submodules`, or run `git submodule update --init` after a plain clone, to populate the `<segment>/` directories.
+
 This repository contains **only what the OpenClaw/NemoClaw runtime actually reads**. Configuration-only: no application code, no build system, no tests.
 
 ## Structure
 
-Each segment lives at `<segment>/` in the repo root:
+Each segment lives at `<segment>/` in the repo root **as a git submodule** pointing at `github.com/iblai/<segment>-agents`. Within each submodule:
 
 - `openclaw.json` -- gateway configuration; every agent declared in `agents.list[]`
 - `.config-hash` -- sha256 of `openclaw.json` (recompute after any edit)
@@ -62,12 +64,13 @@ Skill credentials resolve from environment variables (the OpenClaw daemon loads 
 
 ## Installing a segment
 
-A segment installs onto an OpenClaw/NemoClaw host (set up per [iblai-claw-setup](https://github.com/iblai/iblai-claw-setup)) by copying `<segment>/`'s contents into the config root — `/sandbox/.openclaw/` for NemoClaw, `~/.openclaw/` for standalone OpenClaw — then filling credentials, recomputing `.config-hash`, and reloading the gateway. Copying one segment installs its parent plus every subagent at once.
+A segment installs onto an OpenClaw/NemoClaw host (set up per [iblai-claw-setup](https://github.com/iblai/iblai-claw-setup)) by cloning the segment's own repo (`github.com/iblai/<segment>-agents`) — or the umbrella `claws` repo with `--recurse-submodules` — and copying the config files into the config root (`/sandbox/.openclaw/` for NemoClaw, `~/.openclaw/` for standalone OpenClaw), excluding `.git/`, then filling credentials, recomputing `.config-hash`, and reloading the gateway. Installing one segment installs its parent plus every subagent at once.
 
 The root `README.md` carries two install sections that MUST stay accurate: **"Installing a segment"** (manual `cp`-based steps) and **"Installing a segment with Claude Code"** (a paste-in runbook an agent runs on the host to install a segment straight from this GitHub repo). When config paths, install/reload commands, or the segment list change, update both — and the per-segment `README.md` import sections.
 
 ## Conventions
 
+- Segments are **git submodules**, each its own repo (`github.com/iblai/<segment>-agents`). To change a segment, edit inside `<segment>/`, then commit and push **within that submodule** (that is where the files actually live). Afterward, from the `claws` root run `git add <segment>` and commit to advance the recorded submodule pointer, then push `claws`. A change committed only in the submodule but not recorded in the superproject leaves `claws` pointing at the old revision.
 - `openclaw.json` is strict JSON. After ANY edit, recompute the hash from inside the segment dir: `shasum -a 256 openclaw.json > .config-hash`.
 - When an agent has a `HEARTBEAT.md`, its heartbeat schedule lives in its `openclaw.json` `agents.list[]` entry as a `heartbeat` key.
 - `IDENTITY.md` uses `Name:`, `Role:`, `Vibe:`. `SOUL.md` is a lead paragraph + bullets.
